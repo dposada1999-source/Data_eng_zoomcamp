@@ -7,6 +7,7 @@
 import pandas as pd
 from sqlalchemy import create_engine
 from tqdm.auto import tqdm
+import click
 
 dtype = {
     "VendorID": "Int64",
@@ -33,20 +34,17 @@ parse_dates = [
 ]
 
 
-def ingest_data():
-    year = 2021
-    month = 1
-
-    pg_user = 'root'
-    pg_pass = 'root'
-    pg_host = 'localhost'
-    pg_port = 5432
-    pg_db = 'ny_taxi'
-
-    target_table = 'yellow_taxi_data'
-
+@click.command()
+@click.option('--year', default=2021, help='Year for the data ingestion')
+@click.option('--month', default=1, help='Month for the data ingestion')
+@click.option('--pg_user', default='root', help='PostgreSQL user')
+@click.option('--pg_pass', default='root', help='PostgreSQL password')
+@click.option('--pg_host', default='localhost', help='PostgreSQL host')
+@click.option('--pg_port', default=5432, help='PostgreSQL port')
+@click.option('--pg_db', default='ny_taxi', help='PostgreSQL database name')
+@click.option('--target_table', default='yellow_taxi_data', help='Target table for data ingestion')
+def ingest_data(year, month, pg_user, pg_pass, pg_host, pg_port, pg_db, target_table):
     url = f'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_{year}-{month:02d}.csv.gz'
-
     engine = create_engine(f'postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}')
 
     df_iter = pd.read_csv(
