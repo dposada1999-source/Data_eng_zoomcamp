@@ -1,5 +1,21 @@
 *.parquet
 
+# Environment files
+.env
+.env.*
+*.env
+
+# Secret JSON files
+keys.json
+*.secret.json
+*.keys.json
+
+# General sensitive file patterns
+secrets/
+*.pem
+*.key
+*.json.enc
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

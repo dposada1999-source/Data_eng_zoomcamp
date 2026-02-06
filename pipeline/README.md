@@ -40,3 +40,18 @@ Group by c."Zone", d."PULocationID") e on e."PULocationID" = b."PULocationID"
 where date(b.lpep_pickup_datetime) >= '2025-11-01' and date(b.lpep_pickup_datetime )< '2025-12-01'
 Group by a."Zone", b.tip_amount
 order by b.tip_amount desc;
+
+Homework 2:
+Q3:
+SELECT count(*)
+FROM de-zoomcamp-485820.zoomcamp.yellow_tripdata
+Where filename like ('%2020%')
+
+Q4:
+SELECT count(*)
+FROM de-zoomcamp-485820.zoomcamp.green_tripdata
+Where filename like ('%2020%')
+
+Q5:
+SELECT count(*)
+FROM de-zoomcamp-485820.zoomcamp.yellow_tripdata_2021_03
