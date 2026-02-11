@@ -11,6 +11,6 @@ COPY "pyproject.toml" "uv.lock" ".python-version" ./
 # install dependencies from uv.lock
 RUN uv sync --locked
 
-COPY load_data.py load_data.py
+COPY load_taxi_data_2024.py load_taxi_data_2024.py
 
-ENTRYPOINT ["python","load_data.py"]
+ENTRYPOINT ["python","load_taxi_data_2024.py"]

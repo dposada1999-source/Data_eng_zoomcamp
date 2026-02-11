@@ -55,3 +55,53 @@ Where filename like ('%2020%')
 Q5:
 SELECT count(*)
 FROM de-zoomcamp-485820.zoomcamp.yellow_tripdata_2021_03
+
+Homework 3: 
+Create or replace external table de-zoomcamp-485820.zoomcamp.external_yellow_tripdata_2024
+options (
+  format = 'PARQUET',
+  uris = ['gs://kestra_zoomcamp_test_david/yellow_tripdata_2024-*.parquet']
+);
+
+--
+
+Create or replace table de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_non_partiotioned AS
+Select * FROM de-zoomcamp-485820.zoomcamp.external_yellow_tripdata_2024
+
+--
+
+Select count(1)
+from de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_non_partiotioned
+
+Select Distinct(Count(PULocationID))
+From de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_non_partiotioned
+
+Select Distinct(Count(PULocationID))
+From de-zoomcamp-485820.zoomcamp.external_yellow_tripdata_2024
+
+Select PULocationID
+From de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_non_partiotioned
+
+Select PULocationID, DOLocationID
+From de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_non_partiotioned
+
+Select count(1)
+from de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_non_partiotioned
+where fare_amount = 0
+
+Create or replace table de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_partiotioned 
+PARTITION BY DATE(tpep_dropoff_datetime)
+CLUSTER BY VendorID AS
+Select * FROM de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_non_partiotioned
+
+
+Select DISTINCT(VendorID)
+From de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_non_partiotioned
+Where tpep_dropoff_datetime >= '2024-03-01'AND tpep_dropoff_datetime <  '2024-03-16'
+
+Select DISTINCT(VendorID)
+From de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_partiotioned
+Where tpep_dropoff_datetime >= '2024-03-01'AND tpep_dropoff_datetime <  '2024-03-16'
+
+Select Count(*)
+From de-zoomcamp-485820.zoomcamp.yellow_tripdata_2024_partiotioned
